@@ -3,8 +3,7 @@
     "username": "root",
     "password": "904rk3NNyYzG",
     "database": "apparentDB",
-    "host": "apparentdbinstance.czb6epjnxz8v.us-west-1.rds.amazonaws.com
-    ",
+    "host": "apparentdbinstance.czb6epjnxz8v.us-west-1.rds.amazonaws.com",
     "port": 3306,
     "dialect": "mysql"
   },
@@ -12,16 +11,14 @@
     "username": "root",
     "password": "904rk3NNyYzG",
     "database": "apparentDB",
-    "host": "apparentdbinstance.czb6epjnxz8v.us-west-1.rds.amazonaws.com
-    ",
+    "host": "apparentdbinstance.czb6epjnxz8v.us-west-1.rds.amazonaws.com",
     "dialect": "mysql"
   },
   "production": {
     "username": "root",
     "password": "904rk3NNyYzG",
     "database": "apparentDB",
-    "host": "apparentdbinstance.czb6epjnxz8v.us-west-1.rds.amazonaws.com
-    ",
+    "host": "apparentdbinstance.czb6epjnxz8v.us-west-1.rds.amazonaws.com",
     "port": 3306,
     "dialect": "mysql"
   }
