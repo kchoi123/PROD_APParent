@@ -1,0 +1,146 @@
+Executing (default): CREATE TABLE IF NOT EXISTS `parents` (`id` INTEGER NOT NULL auto_increment , `userName` VARCHAR(255) NOT NULL UNIQUE, `password` VARCHAR(255) NOT NULL, `email` VARCHAR(255) NOT NULL UNIQUE, `city` VARCHAR(255) NOT NULL, `state` VARCHAR(255) NOT NULL, `createdAt` DATETIME NOT NULL, `updatedAt` DATETIME NOT NULL, PRIMARY KEY (`id`)) ENGINE=InnoDB;
+Executing (default): SHOW INDEX FROM `parents` FROM `apparentDB`
+Executing (default): CREATE TABLE IF NOT EXISTS `posts` (`id` INTEGER NOT NULL auto_increment , `title` VARCHAR(255) NOT NULL, `description` TEXT NOT NULL, `category` VARCHAR(255) NOT NULL, `createdAt` DATETIME NOT NULL, `updatedAt` DATETIME NOT NULL, `parentId` INTEGER, PRIMARY KEY (`id`), FOREIGN KEY (`parentId`) REFERENCES `parents` (`id`) ON DELETE CASCADE ON UPDATE CASCADE) ENGINE=InnoDB;
+Executing (default): SHOW INDEX FROM `posts` FROM `apparentDB`
+Executing (default): CREATE TABLE IF NOT EXISTS `comments` (`id` INTEGER NOT NULL auto_increment , `description` TEXT NOT NULL, `createdAt` DATETIME NOT NULL, `updatedAt` DATETIME NOT NULL, `postId` INTEGER NOT NULL, `parentId` INTEGER NOT NULL, PRIMARY KEY (`id`), FOREIGN KEY (`postId`) REFERENCES `posts` (`id`) ON DELETE NO ACTION ON UPDATE CASCADE, FOREIGN KEY (`parentId`) REFERENCES `parents` (`id`) ON DELETE NO ACTION ON UPDATE CASCADE) ENGINE=InnoDB;
+Executing (default): SHOW INDEX FROM `comments` FROM `apparentDB`
+Executing (default): CREATE TABLE IF NOT EXISTS `schools` (`id` INTEGER NOT NULL auto_increment , `name` VARCHAR(255) NOT NULL, `streetAddress` VARCHAR(255) NOT NULL, `city` VARCHAR(255) NOT NULL, `state` VARCHAR(255) NOT NULL, `zipcode` INTEGER NOT NULL, `createdAt` DATETIME NOT NULL, `updatedAt` DATETIME NOT NULL, PRIMARY KEY (`id`)) ENGINE=InnoDB;
+Executing (default): SHOW INDEX FROM `schools` FROM `apparentDB`
+Executing (default): CREATE TABLE IF NOT EXISTS `kids` (`id` INTEGER NOT NULL auto_increment , `name` VARCHAR(255) NOT NULL, `gradeLevel` INTEGER NOT NULL, `createdAt` DATETIME NOT NULL, `updatedAt` DATETIME NOT NULL, `parentId` INTEGER NOT NULL, `schoolId` INTEGER NOT NULL, PRIMARY KEY (`id`), FOREIGN KEY (`parentId`) REFERENCES `parents` (`id`) ON DELETE NO ACTION ON UPDATE CASCADE, FOREIGN KEY (`schoolId`) REFERENCES `schools` (`id`) ON DELETE NO ACTION ON UPDATE CASCADE) ENGINE=InnoDB;
+Executing (default): SHOW INDEX FROM `kids` FROM `apparentDB`
+Executing (default): CREATE TABLE IF NOT EXISTS `parentSchools` (`createdAt` DATETIME NOT NULL, `updatedAt` DATETIME NOT NULL, `parentId` INTEGER , `schoolId` INTEGER , PRIMARY KEY (`parentId`, `schoolId`), FOREIGN KEY (`parentId`) REFERENCES `parents` (`id`) ON DELETE CASCADE ON UPDATE CASCADE, FOREIGN KEY (`schoolId`) REFERENCES `schools` (`id`) ON DELETE CASCADE ON UPDATE CASCADE) ENGINE=InnoDB;
+Executing (default): SHOW INDEX FROM `parentSchools` FROM `apparentDB`
+App listening on: http://localhost:3001
+[33mwarn[39m:    --minUptime not set. Defaulting to: 1000ms
+[33mwarn[39m:    --spinSleepTime not set. Your script will exit if it does not stay up for at least 1000ms
+Executing (default): CREATE TABLE IF NOT EXISTS `parents` (`id` INTEGER NOT NULL auto_increment , `userName` VARCHAR(255) NOT NULL UNIQUE, `password` VARCHAR(255) NOT NULL, `email` VARCHAR(255) NOT NULL UNIQUE, `city` VARCHAR(255) NOT NULL, `state` VARCHAR(255) NOT NULL, `createdAt` DATETIME NOT NULL, `updatedAt` DATETIME NOT NULL, PRIMARY KEY (`id`)) ENGINE=InnoDB;
+Executing (default): SHOW INDEX FROM `parents` FROM `apparentDB`
+Executing (default): CREATE TABLE IF NOT EXISTS `posts` (`id` INTEGER NOT NULL auto_increment , `title` VARCHAR(255) NOT NULL, `description` TEXT NOT NULL, `category` VARCHAR(255) NOT NULL, `createdAt` DATETIME NOT NULL, `updatedAt` DATETIME NOT NULL, `parentId` INTEGER, PRIMARY KEY (`id`), FOREIGN KEY (`parentId`) REFERENCES `parents` (`id`) ON DELETE CASCADE ON UPDATE CASCADE) ENGINE=InnoDB;
+Executing (default): SHOW INDEX FROM `posts` FROM `apparentDB`
+Executing (default): CREATE TABLE IF NOT EXISTS `comments` (`id` INTEGER NOT NULL auto_increment , `description` TEXT NOT NULL, `createdAt` DATETIME NOT NULL, `updatedAt` DATETIME NOT NULL, `postId` INTEGER NOT NULL, `parentId` INTEGER NOT NULL, PRIMARY KEY (`id`), FOREIGN KEY (`postId`) REFERENCES `posts` (`id`) ON DELETE NO ACTION ON UPDATE CASCADE, FOREIGN KEY (`parentId`) REFERENCES `parents` (`id`) ON DELETE NO ACTION ON UPDATE CASCADE) ENGINE=InnoDB;
+Executing (default): SHOW INDEX FROM `comments` FROM `apparentDB`
+Executing (default): CREATE TABLE IF NOT EXISTS `schools` (`id` INTEGER NOT NULL auto_increment , `name` VARCHAR(255) NOT NULL, `streetAddress` VARCHAR(255) NOT NULL, `city` VARCHAR(255) NOT NULL, `state` VARCHAR(255) NOT NULL, `zipcode` INTEGER NOT NULL, `createdAt` DATETIME NOT NULL, `updatedAt` DATETIME NOT NULL, PRIMARY KEY (`id`)) ENGINE=InnoDB;
+Executing (default): SHOW INDEX FROM `schools` FROM `apparentDB`
+Executing (default): CREATE TABLE IF NOT EXISTS `kids` (`id` INTEGER NOT NULL auto_increment , `name` VARCHAR(255) NOT NULL, `gradeLevel` INTEGER NOT NULL, `createdAt` DATETIME NOT NULL, `updatedAt` DATETIME NOT NULL, `parentId` INTEGER NOT NULL, `schoolId` INTEGER NOT NULL, PRIMARY KEY (`id`), FOREIGN KEY (`parentId`) REFERENCES `parents` (`id`) ON DELETE NO ACTION ON UPDATE CASCADE, FOREIGN KEY (`schoolId`) REFERENCES `schools` (`id`) ON DELETE NO ACTION ON UPDATE CASCADE) ENGINE=InnoDB;
+Executing (default): SHOW INDEX FROM `kids` FROM `apparentDB`
+Executing (default): CREATE TABLE IF NOT EXISTS `parentSchools` (`createdAt` DATETIME NOT NULL, `updatedAt` DATETIME NOT NULL, `parentId` INTEGER , `schoolId` INTEGER , PRIMARY KEY (`parentId`, `schoolId`), FOREIGN KEY (`parentId`) REFERENCES `parents` (`id`) ON DELETE CASCADE ON UPDATE CASCADE, FOREIGN KEY (`schoolId`) REFERENCES `schools` (`id`) ON DELETE CASCADE ON UPDATE CASCADE) ENGINE=InnoDB;
+Executing (default): SHOW INDEX FROM `parentSchools` FROM `apparentDB`
+events.js:174
+      throw er; // Unhandled 'error' event
+      ^
+
+Error: listen EADDRINUSE: address already in use :::3001
+    at Server.setupListenHandle [as _listen2] (net.js:1270:14)
+    at listenInCluster (net.js:1318:12)
+    at Server.listen (net.js:1405:7)
+    at Function.listen (/var/www/apparent/node_modules/express/lib/application.js:618:24)
+    at /var/www/apparent/server.js:67:7
+    at tryCatcher (/var/www/apparent/node_modules/bluebird/js/release/util.js:16:23)
+    at Promise._settlePromiseFromHandler (/var/www/apparent/node_modules/bluebird/js/release/promise.js:512:31)
+    at Promise._settlePromise (/var/www/apparent/node_modules/bluebird/js/release/promise.js:569:18)
+    at Promise._settlePromise0 (/var/www/apparent/node_modules/bluebird/js/release/promise.js:614:10)
+    at Promise._settlePromises (/var/www/apparent/node_modules/bluebird/js/release/promise.js:693:18)
+    at Async._drainQueue (/var/www/apparent/node_modules/bluebird/js/release/async.js:133:16)
+    at Async._drainQueues (/var/www/apparent/node_modules/bluebird/js/release/async.js:143:10)
+    at Immediate.Async.drainQueues (/var/www/apparent/node_modules/bluebird/js/release/async.js:17:14)
+    at runCallback (timers.js:705:18)
+    at tryOnImmediate (timers.js:676:5)
+    at processImmediate (timers.js:658:5)
+Emitted 'error' event at:
+    at emitErrorNT (net.js:1297:8)
+    at process._tickCallback (internal/process/next_tick.js:63:19)
+error: Forever detected script exited with code: 1
+
+> sern@1.0.0 start /var/www/apparent
+> if-env NODE_ENV=production && npm run start:prod || npm run start:dev
+
+
+> sern@1.0.0 start:dev /var/www/apparent
+> concurrently "nodemon --ignore 'client/*'" "npm run client"
+
+[1] 
+[1] > sern@1.0.0 client /var/www/apparent
+[1] > cd client && npm run start
+[1] 
+[0] [33m[nodemon] 1.18.11[39m
+[0] [33m[nodemon] to restart at any time, enter `rs`[39m
+[0] [33m[nodemon] watching: *.*[39m
+[0] [32m[nodemon] starting `node server.js`[39m
+[1] 
+[1] > sern@0.1.0 start /var/www/apparent/client
+[1] > react-scripts start
+[1] 
+[0] Executing (default): CREATE TABLE IF NOT EXISTS `parents` (`id` INTEGER NOT NULL auto_increment , `userName` VARCHAR(255) NOT NULL UNIQUE, `password` VARCHAR(255) NOT NULL, `email` VARCHAR(255) NOT NULL UNIQUE, `city` VARCHAR(255) NOT NULL, `state` VARCHAR(255) NOT NULL, `createdAt` DATETIME NOT NULL, `updatedAt` DATETIME NOT NULL, PRIMARY KEY (`id`)) ENGINE=InnoDB;
+[0] Executing (default): SHOW INDEX FROM `parents` FROM `apparentDB`
+[0] Executing (default): CREATE TABLE IF NOT EXISTS `posts` (`id` INTEGER NOT NULL auto_increment , `title` VARCHAR(255) NOT NULL, `description` TEXT NOT NULL, `category` VARCHAR(255) NOT NULL, `createdAt` DATETIME NOT NULL, `updatedAt` DATETIME NOT NULL, `parentId` INTEGER, PRIMARY KEY (`id`), FOREIGN KEY (`parentId`) REFERENCES `parents` (`id`) ON DELETE CASCADE ON UPDATE CASCADE) ENGINE=InnoDB;
+[0] Executing (default): SHOW INDEX FROM `posts` FROM `apparentDB`
+[0] Executing (default): CREATE TABLE IF NOT EXISTS `comments` (`id` INTEGER NOT NULL auto_increment , `description` TEXT NOT NULL, `createdAt` DATETIME NOT NULL, `updatedAt` DATETIME NOT NULL, `postId` INTEGER NOT NULL, `parentId` INTEGER NOT NULL, PRIMARY KEY (`id`), FOREIGN KEY (`postId`) REFERENCES `posts` (`id`) ON DELETE NO ACTION ON UPDATE CASCADE, FOREIGN KEY (`parentId`) REFERENCES `parents` (`id`) ON DELETE NO ACTION ON UPDATE CASCADE) ENGINE=InnoDB;
+[0] Executing (default): SHOW INDEX FROM `comments` FROM `apparentDB`
+[0] Executing (default): CREATE TABLE IF NOT EXISTS `schools` (`id` INTEGER NOT NULL auto_increment , `name` VARCHAR(255) NOT NULL, `streetAddress` VARCHAR(255) NOT NULL, `city` VARCHAR(255) NOT NULL, `state` VARCHAR(255) NOT NULL, `zipcode` INTEGER NOT NULL, `createdAt` DATETIME NOT NULL, `updatedAt` DATETIME NOT NULL, PRIMARY KEY (`id`)) ENGINE=InnoDB;
+[0] Executing (default): SHOW INDEX FROM `schools` FROM `apparentDB`
+[0] Executing (default): CREATE TABLE IF NOT EXISTS `kids` (`id` INTEGER NOT NULL auto_increment , `name` VARCHAR(255) NOT NULL, `gradeLevel` INTEGER NOT NULL, `createdAt` DATETIME NOT NULL, `updatedAt` DATETIME NOT NULL, `parentId` INTEGER NOT NULL, `schoolId` INTEGER NOT NULL, PRIMARY KEY (`id`), FOREIGN KEY (`parentId`) REFERENCES `parents` (`id`) ON DELETE NO ACTION ON UPDATE CASCADE, FOREIGN KEY (`schoolId`) REFERENCES `schools` (`id`) ON DELETE NO ACTION ON UPDATE CASCADE) ENGINE=InnoDB;
+[0] Executing (default): SHOW INDEX FROM `kids` FROM `apparentDB`
+[0] Executing (default): CREATE TABLE IF NOT EXISTS `parentSchools` (`createdAt` DATETIME NOT NULL, `updatedAt` DATETIME NOT NULL, `parentId` INTEGER , `schoolId` INTEGER , PRIMARY KEY (`parentId`, `schoolId`), FOREIGN KEY (`parentId`) REFERENCES `parents` (`id`) ON DELETE CASCADE ON UPDATE CASCADE, FOREIGN KEY (`schoolId`) REFERENCES `schools` (`id`) ON DELETE CASCADE ON UPDATE CASCADE) ENGINE=InnoDB;
+[0] Executing (default): SHOW INDEX FROM `parentSchools` FROM `apparentDB`
+[0] events.js:174
+[0]       throw er; // Unhandled 'error' event
+[0]       ^
+[0] 
+[0] Error: listen EADDRINUSE: address already in use :::3001
+[0]     at Server.setupListenHandle [as _listen2] (net.js:1270:14)
+[0]     at listenInCluster (net.js:1318:12)
+[0]     at Server.listen (net.js:1405:7)
+[0]     at Function.listen (/var/www/apparent/node_modules/express/lib/application.js:618:24)
+[0]     at /var/www/apparent/server.js:67:7
+[0]     at tryCatcher (/var/www/apparent/node_modules/bluebird/js/release/util.js:16:23)
+[0]     at Promise._settlePromiseFromHandler (/var/www/apparent/node_modules/bluebird/js/release/promise.js:512:31)
+[0]     at Promise._settlePromise (/var/www/apparent/node_modules/bluebird/js/release/promise.js:569:18)
+[0]     at Promise._settlePromise0 (/var/www/apparent/node_modules/bluebird/js/release/promise.js:614:10)
+[0]     at Promise._settlePromises (/var/www/apparent/node_modules/bluebird/js/release/promise.js:693:18)
+[0]     at Async._drainQueue (/var/www/apparent/node_modules/bluebird/js/release/async.js:133:16)
+[0]     at Async._drainQueues (/var/www/apparent/node_modules/bluebird/js/release/async.js:143:10)
+[0]     at Immediate.Async.drainQueues (/var/www/apparent/node_modules/bluebird/js/release/async.js:17:14)
+[0]     at runCallback (timers.js:705:18)
+[0]     at tryOnImmediate (timers.js:676:5)
+[0]     at processImmediate (timers.js:658:5)
+[0] Emitted 'error' event at:
+[0]     at emitErrorNT (net.js:1297:8)
+[0]     at process._tickCallback (internal/process/next_tick.js:63:19)
+[0] [31m[nodemon] app crashed - waiting for file changes before starting...[39m
+[1] Starting the development server...
+[1] 
+[1] Compiled with warnings.
+[1] 
+[1] ./src/pages/dashboard.js
+[1]   Line 13:   'stat' is defined but never used                                                                                                                                                                 no-unused-vars
+[1]   Line 95:    Nested block is redundant                                                                                                                                                                        no-lone-blocks
+[1]   Line 133:   Unreachable code                                                                                                                                                                                 no-unreachable
+[1]   Line 133:   Nested block is redundant                                                                                                                                                                        no-lone-blocks
+[1]   Line 162:   Unreachable code                                                                                                                                                                                 no-unreachable
+[1]   Line 162:   Nested block is redundant                                                                                                                                                                        no-lone-blocks
+[1]   Line 199:   Nested block is redundant                                                                                                                                                                        no-lone-blocks
+[1]   Line 199:   Unreachable code                                                                                                                                                                                 no-unreachable
+[1]   Line 222:   Nested block is redundant                                                                                                                                                                        no-lone-blocks
+[1]   Line 222:   Unreachable code                                                                                                                                                                                 no-unreachable
+[1]   Line 242:  Redundant alt attribute. Screen-readers already announce `img` tags as an image. You don’t need to use the words `image`, `photo,` or `picture` (or any specified custom words) in the alt prop  jsx-a11y/img-redundant-alt
+[1]   Line 243:  Redundant alt attribute. Screen-readers already announce `img` tags as an image. You don’t need to use the words `image`, `photo,` or `picture` (or any specified custom words) in the alt prop  jsx-a11y/img-redundant-alt
+[1]   Line 244:  Redundant alt attribute. Screen-readers already announce `img` tags as an image. You don’t need to use the words `image`, `photo,` or `picture` (or any specified custom words) in the alt prop  jsx-a11y/img-redundant-alt
+[1]   Line 245:  Redundant alt attribute. Screen-readers already announce `img` tags as an image. You don’t need to use the words `image`, `photo,` or `picture` (or any specified custom words) in the alt prop  jsx-a11y/img-redundant-alt
+[1] 
+[1] ./src/components/postCard/index.js
+[1]   Line 4:    'InputText' is defined but never used            no-unused-vars
+[1]   Line 5:    'FormContainer' is defined but never used        no-unused-vars
+[1]   Line 7:    'CommentSubmitButton' is defined but never used  no-unused-vars
+[1]   Line 99:  No duplicate props allowed                       react/jsx-no-duplicate-props
+[1] 
+[1] ./src/components/myProfile/index.js
+[1]   Line 4:  'FormAction' is defined but never used         no-unused-vars
+[1]   Line 4:  'Dropdown' is defined but never used           no-unused-vars
+[1]   Line 4:  'OptionForDropdown' is defined but never used  no-unused-vars
+[1] 
+[1] ./src/components/form/index.js
+[1]   Line 73:  The href attribute requires a valid value to be accessible. Provide a valid, navigable address as the href value. If you cannot provide a valid href, but still need the element to resemble a link, use a button and change it with appropriate styles. Learn more: https://github.com/evcohen/eslint-plugin-jsx-a11y/blob/master/docs/rules/anchor-is-valid.md  jsx-a11y/anchor-is-valid
+[1] 
+[1] Search for the keywords to learn more about each warning.
+[1] To ignore, add // eslint-disable-next-line to the line before.
+[1] 

@@ -1,0 +1,1 @@
+var parentsController = require("./parentscontroller");

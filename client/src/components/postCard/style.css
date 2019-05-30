@@ -1,0 +1,60 @@
+/* .post-container {
+    max-height: 100vh;
+} */
+
+.post-content{
+    font-family: 'Artifika', serif;
+    font-size: 1rem
+}
+
+.profile-icon {
+    width: 4rem;
+    height: 4rem;
+}
+
+.author{
+    color: rgb(7, 83, 206);
+    margin-bottom: 10%;
+}
+
+.card-title {
+    color: #176d88;
+    font-weight: 900;
+    font-size: 2rem;
+    font-family: 'Artifika', serif;
+
+}
+
+#modalTitle {
+	color: #176d88;
+}
+
+.open-comment:hover {
+    background: rgba(200, 198, 198, 0.349)
+}
+
+.post-photo{
+    /* width:25vw; */
+    max-height: 50vh;
+}
+
+.category {
+    float:right
+}
+
+.last-updated {
+    float: none;
+    font-size: 85%;
+    font-weight: 100;
+    line-height: 5%
+}
+
+.wrapper-div{
+    display: inline-block
+}
+
+.sub-div{
+    display: inline-block;
+    position: relative;
+    top: 1rem;
+}
