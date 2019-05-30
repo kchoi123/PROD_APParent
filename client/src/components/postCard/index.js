@@ -99,7 +99,7 @@ class PostCard extends Component {
                 <span className="category my-auto card-text" id="postCardCategory">
                   <b>Category:</b> {this.props.category}
                 </span>
-
+                <hr/>
                 <div className="mx-auto">
                   <p className="card-title mx-auto" id="postCardTitle">{this.props.title}</p>
                   <p className="card-text mx-auto" id="postCardDetails">

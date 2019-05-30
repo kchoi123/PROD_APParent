@@ -63,7 +63,7 @@ export function OptionForDropdown(props) {
 
 export function FormButton(props) {
     return (
-        <button type="submit" className="btn" onClick={props.handleButtonClick}>{props.nameButton} </button>
+        <button type="submit" className={"btn " + props.moreClass} onClick={props.handleButtonClick}><i className={props.icon}></i> {props.nameButton} </button>
     )
 }
 

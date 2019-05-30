@@ -18,8 +18,9 @@ class Dashboard extends Component {
     results: [],
     members: [],
     pageWanted: "dashboard",
-    loggedInUser: []
-
+    loggedInUser: [], 
+    //Filter criteria 
+    filteredState: "California"
   };
 
   componentDidMount() {
@@ -34,7 +35,7 @@ class Dashboard extends Component {
       )
       .catch(err => console.log(err));
 
-    //Retrives all the Members Data 
+    //Retrives all the Members Data - By default displays all 
     API.searchAllMembers()
       .then(res =>
         this.setState({
@@ -90,8 +91,22 @@ class Dashboard extends Component {
     )
   }
 
+  //Filter Date for All Members 
+  handleSearchCriteria = () =>{
+    console.log("On changee of Filter value ", this.state.filteredState);
+    API.searchAllMembersForAState(this.state.filteredState)
+      .then(res =>
+        this.setState({
+          members: res.data, 
+          pageWanted: "allMembers",
+          filteredState: this.props.filteredState
+        })
+      )
+      .catch(err => console.log(err));
+  }
 
   render() {
+
     {/* display the page with the activity component */ }
     if (this.state.pageWanted === "dashboard") {
       return (
@@ -148,7 +163,7 @@ class Dashboard extends Component {
 
             <h1 className="mt-2 text-dark">Welcome {this.state.loggedInUser.userName}</h1>
 
-
+            {/* Logged in User Details along with their kid info within  */}
             <MyProfile
               userName={this.state.loggedInUser.userName}
               email={this.state.loggedInUser.email}
@@ -177,12 +192,10 @@ class Dashboard extends Component {
           <div id="page-wrap">
 
             <h1 className="mt-2 text-dark">Welcome {this.state.loggedInUser.userName}</h1>
-
-          
-
+            {/* Displays all the Members on the website expect for the logged in USer  */}
             <AllMembers>
-            <FilterBy  /> 
-            {/* searchStates={this.searchStates.bind(this)} */}
+            <FilterBy handleClick={this.handleSearchCriteria} /> 
+
             <hr /> 
               {this.state.members.length ? (
                 this.state.members.map((member, i) => {

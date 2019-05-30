@@ -1,7 +1,8 @@
 import React, { Component } from "react"
-import { FormContainer, FormAction, FormTitle, FormLabel, FormButton, Dropdown, OptionForDropdown } from "../form";
+import { FormAction, FormTitle, FormLabel, FormButton, Dropdown, OptionForDropdown } from "../form";
 import API from "../../utils/API";
-import gradeLevel from "../../gradeLevel.json"
+import gradeLevel from "../../gradeLevel.json"; 
+import "./style.css";
 
 class KidProfile extends Component {
     state = {
@@ -75,10 +76,17 @@ class KidProfile extends Component {
             })
             .catch(err => console.log(err));
     }
+    // Reloading the page to redirect to dashboard 
+    handleReturnBack = event => {
+        event.preventDefault();
+        console.log("redirect page to dashboard");
+        window.location.reload();
+       
+    }
 
     componentDidMount() {
-        console.log("Grade", this.props.grade); 
-        console.log("Kid ID", this.props.kidId); 
+        // console.log("Grade", this.props.grade); 
+        // console.log("Kid ID", this.props.kidId); 
         API.getAllSchools()
             .then(
                 res => {
@@ -142,21 +150,27 @@ class KidProfile extends Component {
 
                     {this.state.disabled ? (
                         <FormButton
-                            nameButton="Edit Kid Info"
+                            nameButton=" Edit Kid Info"
                             handleButtonClick={this.handleEditButtonClick}
+                            moreClass="btn-edit far fa-edit"
                         />
                     ) :
                         (
                             <div>
                                 <FormButton
-                                    nameButton="Update Child"
-                                    className="btn-success"
+                                    nameButton=" Update Child"
+                                    moreClass="btn-success far fa-save mr-2"
                                     handleButtonClick={this.handleUpdateButtonClick}
                                 />
                                 <FormButton
                                     nameButton="Remove Child"
-                                    className="btn-warning"
+                                    moreClass="btn-warning fas fa-eraser mr-2"
                                     handleButtonClick={this.handleDeleteInfo}
+                                />
+                                 <FormButton
+                                    nameButton="Cancel"
+                                    moreClass="btn-secondary mr-2 btn-sm"
+                                    handleButtonClick={this.handleReturnBack}
                                 />
                             </div>
                         )}

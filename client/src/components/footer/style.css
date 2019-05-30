@@ -9,7 +9,8 @@ body {
 }
 
 #footer {
-    background-color: #176d88 !important;
+    /* background-color: #176d88 !important; */
+    background-image: linear-gradient(to left, #176e88, #4c95ac,  #346574 );
     position: absolute;
     bottom: 0;
     height: 67px !important;

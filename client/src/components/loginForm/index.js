@@ -2,6 +2,7 @@ import React, { Component } from "react"
 import { FormAction, FormLabel, FormButton, FormMessage } from "../form";
 import API from "../../utils/API";
 import ErrorMessage from "../errorMessage"
+import "./style.css"
 
 class LoginForm extends Component {
     state = {
@@ -123,6 +124,8 @@ class LoginForm extends Component {
                 />
                 <FormButton
                     nameButton="Submit"
+                    moreClass="login-button"
+                    icon="fas fa-sign-in-alt"
                     handleButtonClick={this.handleSubmitButtonClick}
                 />
             </div>

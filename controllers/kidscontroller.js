@@ -17,7 +17,7 @@ module.exports = {
 
     //update kids info function as a stretch goal
     update: function(req,res){
-        console.log("Step 2 inside kid controller", req.params.id); 
+        // console.log("Step 2 inside kid controller", req.params.id); 
         if (req.isAuthenticated()) {
             db.kids.update(
                 {   //Fields to update 
@@ -29,7 +29,7 @@ module.exports = {
                        id: req.params.id
                     }
                 }).then(function (dbKidInfo) {
-                    console.log("update child info for ", dbKidInfo);
+                    // console.log("update child info for ", dbKidInfo);
                     res.json(dbKidInfo)
                 })
                 .catch(err => res.status(422).json(err));
@@ -37,9 +37,9 @@ module.exports = {
     },
     // find all kids for a specific Logged in parent
     findAllKidsForAParent: function (req, res) {
-        console.log("Logged Parent id ", req.session.passport.user.id); 
+        // console.log("Logged Parent id ", req.session.passport.user.id); 
         db.kids.findAll({
-            attributes: ['id', 'gradeLevel', 'schoolId', 'parentId'],
+            attributes: ['id', 'gradeLevel', 'schoolId', 'parentId', 'name'],
             where: {
                 parentId: req.session.passport.user.id
             },
@@ -51,14 +51,14 @@ module.exports = {
                 }
             ]
         }).then(function (result) {
-            console.log("All kids info for a parent: ", result);
+            // console.log("All kids info for a parent: ", result);
             res.json(result)
         })
         .catch(err => res.status(422).json(err));
     }, 
     // find all kids for all parent(s)
     findAllKids: function (req, res) {
-        console.log("Parent id ", req.params.id); 
+        // console.log("Parent id ", req.params.id); 
         db.kids.findAll({
             attributes: ['id', 'gradeLevel'],
             where: {
@@ -72,7 +72,7 @@ module.exports = {
                 }
             ]
         }).then(function (result) {
-            console.log("All kids info for a parent: ", result);
+            // console.log("All kids info for a parent: ", result);
             res.json(result)
         })
         .catch(err => res.status(422).json(err));

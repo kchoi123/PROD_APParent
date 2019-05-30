@@ -43,7 +43,23 @@ module.exports = {
         })
             .catch(err => res.status(422).json(err));
     },
-
+    // find all parents - except the parent logged in - filter by state 
+    findAllParentsForAState: function (req, res) {
+        console.log("2 - Filtering Members based on state", req.params.state);
+        db.parents.findAll({
+            attributes: ["id", "userName", "email", "city", "state", "photoLink"],
+            where: {
+                // excluded the logged-in parent
+                 state: req.params.state ,
+                 [Op.not]: [{ id: req.session.passport.user.id }]
+            }
+        }).then(function (result) {
+            console.log("3 - Filtering Members based on state", result);
+            res.json(result);
+        })
+            .catch(err => res.status(422).json(err));
+    },
+    
     // get all the parents already in the database - to check username at sign-up
     findAllParentsInDB: function(req, res) {
         db.parents.findAll({

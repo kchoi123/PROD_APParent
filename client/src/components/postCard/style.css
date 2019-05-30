@@ -10,6 +10,7 @@
 .profile-icon {
     width: 4rem;
     height: 4rem;
+    box-shadow: rgba(61, 61, 61, 0.719) .2rem .2rem;
 }
 
 .author{
@@ -34,8 +35,9 @@
 }
 
 .post-photo{
-    /* width:25vw; */
-    max-height: 50vh;
+    max-width: 100%;
+    max-height: 30rem;
+    overflow: hidden;
 }
 
 .category {

@@ -5,13 +5,13 @@ import "./style.css";
 
 class userCard extends Component {
     //Setting all default values 
-  state = {
-    schools: [],
-    kids: [],
-  }
+    state = {
+        schools: [],
+        kids: [],
+    }
     componentDidMount() {
-        // retrieves all the kids for the logged in parent... 
-        console.log("Parent ID: ", this.props.parentId);
+        // retrieves all the kids for the parent... 
+        // console.log("Parent ID: ", this.props.parentId);
         API.findAllKids(this.props.parentId)
             .then(
                 res => {
@@ -22,18 +22,6 @@ class userCard extends Component {
                 }
             )
             .catch(err => console.log(err));
-
-        // // retrieves all the schools - filter by state 
-        // API.getAllSchools()
-        //     .then(
-        //         res => {
-        //             console.log(res.data);
-        //             this.setState({
-        //                 schools: res.data
-        //             })
-        //         }
-        //     )
-        //     .catch(err => console.log(err));
     }
 
     render() {
@@ -46,20 +34,22 @@ class userCard extends Component {
                     <h5 className="card-text"><b>Email:</b> {this.props.email}</h5>
                     <h5 className="card-text"><b>Resides in:</b> {this.props.city} | <b> State :</b> {this.props.state}</h5>
                     <h4 className="card-body text-info">Kid(s) Information <i className="fa fa-child"></i>
-<i className="fa fa-child big-child" ></i>: </h4>
+                        <i className="fa fa-child big-child" ></i>: </h4>
                     {/* <h5 className="card-text"><b>No of Kids:</b> {this.state.kids.length}</h5> */}
                     {/* Loops the grades all of kids for a parent */}
                     <h5 className="card-text"><b>Grade Range:</b>
                         {this.state.kids.length ? (
                             this.state.kids.map((kid, i) => {
                                 return (
+                                    // console.log(this.state.kids.filter(function(v,i) { return this.state.kids.indexOf(v) == i; }))
+
                                     <div className="grades" key={i}>
                                         {kid.gradeLevel} </div>
                                 );
                             })) : (<div>Infant - Preschooler</div>)
 
                         }</h5>
-                     <h5 className="card-text"><b>School(s):</b>
+                    <h5 className="card-text"><b>School(s):</b>
                         {this.state.kids.length ? (
                             this.state.kids.map((kid, i) => {
                                 return (

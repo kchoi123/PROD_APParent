@@ -7,6 +7,10 @@ const passport = require("passport");
 router.route("/")
 	.get(parentsController.findAllParents);
 
+// displaying all the parents - for the filter criteria [State]
+router.route("/state/:state")
+	.get(parentsController.findAllParentsForAState);
+
 // get the info of the parents already in the database - to check username at sign-up
 router.route("/all")
 	.get(parentsController.findAllParentsInDB);

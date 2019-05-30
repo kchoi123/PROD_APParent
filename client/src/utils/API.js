@@ -10,7 +10,11 @@ export default {
     searchAllMembers: function() {
         return axios.get("/api/parents");
     },
-    //See Logged in user data 
+    //search all members for a State
+    searchAllMembersForAState: function(data){
+        return axios.get("/api/parents/state/" + data);
+    },
+        //See Logged in user data 
     findOne: function() {
         return axios.get("/api/parents/:id");
     },

@@ -1,24 +1,24 @@
 {
   "development": {
     "username": "root",
-    "password": "904rk3NNyYzG",
+    "password": "password",
     "database": "apparentDB",
-    "host": "apparentdbinstance.czb6epjnxz8v.us-west-1.rds.amazonaws.com",
+    "host": "127.0.0.1",
     "port": 3306,
     "dialect": "mysql"
   },
   "test": {
     "username": "root",
-    "password": "904rk3NNyYzG",
+    "password": "password",
     "database": "apparentDB",
-    "host": "apparentdbinstance.czb6epjnxz8v.us-west-1.rds.amazonaws.com",
+    "host": "127.0.0.1",
     "dialect": "mysql"
   },
   "production": {
     "username": "root",
-    "password": "904rk3NNyYzG",
+    "password": "password",
     "database": "apparentDB",
-    "host": "apparentdbinstance.czb6epjnxz8v.us-west-1.rds.amazonaws.com",
+    "host": "127.0.0.1",
     "port": 3306,
     "dialect": "mysql"
   }

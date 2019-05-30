@@ -7,7 +7,7 @@ router.route("/")
 
 // displaying all the schools for the state 
 router.route("/state/:state")
-.get(schoolsController.findAllByState);
+    .get(schoolsController.findAllByState);
 
 // create a new school 
 router.route("/new")
