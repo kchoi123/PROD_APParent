@@ -68,7 +68,10 @@ module.exports = {
                 {
                     model: db.schools,
                     as: "school", 
-                    required: true
+                    required: true, 
+                    order: [
+                        ['id', 'ASC']
+                    ]
                 }
             ]
         }).then(function (result) {
