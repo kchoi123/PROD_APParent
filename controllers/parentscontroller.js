@@ -32,39 +32,69 @@ module.exports = {
 
     // find all parents - sauf the parent logged in
     findAllParents: function (req, res) {
-        db.parents.findAll({
-            attributes: ["id", "userName", "email", "city", "state", "photoLink"],
-            where: {
-                // excluded the logged-in parent
-                [Op.not]: [{ id: req.session.passport.user.id }]
-            }
-        }).then(function (result) {
-            res.json(result)
-        })
-            .catch(err => res.status(422).json(err));
+        if (req.isAuthenticated()) {
+            db.parents.findAll({
+                attributes: ["id", "userName", "email", "city", "state", "photoLink"],
+                where: {
+                    // excluded the logged-in parent
+                    [Op.not]: [{ id: req.session.passport.user.id }]
+                }
+            }).then(function (result) {
+                res.json(result)
+            })
+                .catch(err => res.status(422).json(err));
+        }
     },
     // find all parents - except the parent logged in - filter by state 
     findAllParentsForAState: function (req, res) {
-        console.log("2 - Filtering Members based on state", req.params.state);
-        db.parents.findAll({
-            attributes: ["id", "userName", "email", "city", "state", "photoLink"],
-            where: {
-                // excluded the logged-in parent
-                 state: req.params.state ,
-                 [Op.not]: [{ id: req.session.passport.user.id }]
-            }
-        }).then(function (result) {
-            console.log("3 - Filtering Members based on state", result);
-            res.json(result);
-        })
-            .catch(err => res.status(422).json(err));
+        if (req.isAuthenticated()) {
+            console.log("2 - Filtering Members based on state", req.params.state);
+            db.parents.findAll({
+                attributes: ["id", "userName", "email", "city", "state", "photoLink"],
+                where: {
+                    // excluded the logged-in parent
+                    state: req.params.state,
+                    [Op.not]: [{ id: req.session.passport.user.id }]
+                }
+            }).then(function (result) {
+                console.log("3 - Filtering Members based on state", result);
+                res.json(result);
+            })
+                .catch(err => res.status(422).json(err));
+        }
     },
-    
+    // get all parents - except the parent logged in - filter by School Name 
+    findAllParentsForASchool: function (req, res) {
+        if (req.isAuthenticated()) {
+            db.parents.findAll(
+                {
+                    order: [
+                        ["updatedAt", "ASC"]
+                    ],
+                    attributes: ["id", "userName", "email", "city", "state", "photoLink"],
+                    //includes the cross-reference table to join the schools with parents 
+                    include: [
+                        { model: db.parentSchools, as: "parentSchools" },
+                        {
+                            model: db.schools, as: "schools",
+                            where: {
+                                [Op.eq]: [{ name: req.params.school }]
+                            }
+                        }
+                    ]
+                }
+            ).then(function (results) {
+                res.json(results);
+                console.log("parents for a school ", results);
+            })
+                .catch(err => res.status(422).json(err));
+        }
+    },
     // get all the parents already in the database - to check username at sign-up
-    findAllParentsInDB: function(req, res) {
+    findAllParentsInDB: function (req, res) {
         db.parents.findAll({
             attributes: ["userName", "email"]
-        }).then(function(results) { res.json(results)});
+        }).then(function (results) { res.json(results) });
     },
 
 
@@ -85,26 +115,28 @@ module.exports = {
 
     //Updating deatils for the logged in user 
     update: function (req, res) {
-        db.parents.update(
-            //Fields to update 
-            {
-                userName: req.body.userName,
-                //Re-generate Hashed Password for the user 
-                // passw: db.users.generateHash(req.body.password) , 
-                city: req.body.city,
-                state: req.body.state,
-                  photoLink : req.body.photoLink
-            }, {
-                where: {
-                    id: req.session.passport.user.id
-                }
-            }).then(function (dbParent) {
+        if (req.isAuthenticated()) {
+            db.parents.update(
+                //Fields to update 
+                {
+                    userName: req.body.userName,
+                    //Re-generate Hashed Password for the user 
+                    // passw: db.users.generateHash(req.body.password) , 
+                    city: req.body.city,
+                    state: req.body.state,
+                    photoLink: req.body.photoLink
+                }, {
+                    where: {
+                        id: req.session.passport.user.id
+                    }
+                }).then(function (dbParent) {
 
-                console.log("Parent Information Updated", dbParent);
-                console.log("1");
-                res.json(dbParent);
-            })
-            .catch(err => res.status(422).json(err));
+                    console.log("Parent Information Updated", dbParent);
+                    console.log("1");
+                    res.json(dbParent);
+                })
+                .catch(err => res.status(422).json(err));
+        }
     },
 
     checkStatus: function (req, res) {

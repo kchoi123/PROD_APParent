@@ -11,6 +11,10 @@ router.route("/")
 router.route("/state/:state")
 	.get(parentsController.findAllParentsForAState);
 
+// displaying all the parents - for the filter criteria [School]
+router.route("/school/:school")
+	.get(parentsController.findAllParentsForASchool);
+
 // get the info of the parents already in the database - to check username at sign-up
 router.route("/all")
 	.get(parentsController.findAllParentsInDB);

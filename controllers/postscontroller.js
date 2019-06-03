@@ -52,5 +52,54 @@ module.exports = {
                 console.log("This is the result", result)
             })
         }
+    },
+    //------------- start Sophie 
+    // find all the posts from the particular category
+    findAllFilteredPosts: function(req, res) {
+        if (req.isAuthenticated()) {
+            db.posts.findAll(
+                {
+                    where: 
+                        {
+                            category: req.params.category
+                        },
+                    order: [['updatedAt', 'DESC']],
+                    include: [
+                        {
+                            attributes: ["id", "userName", "photoLink"],
+                            model: db.parents,
+                            as: "parent"
+                        }
+                    ]
+                }
+            ).then(function (result) {
+                res.json(result)
+                console.log("filtered posts: ", result)
+            })
+        }
+    },
+
+    // get all posts in an ascending order
+    findAllPostsAscending: function(req, res) {
+        if (req.isAuthenticated()) {
+            db.posts.findAll(
+                {
+                    order: [
+                        ["updatedAt", "ASC"]
+                    ],
+                    include: [
+                        {
+                            attributes: ["id", "userName", "photoLink"],
+                            model: db.parents,
+                            as: "parent"
+                        }
+                    ]
+                }
+            ).then(function(results) {
+                res.json(results);
+                console.log("ascending order: ", results);
+            })
+        }
     }
+    //------------- end Sophie 
 }
