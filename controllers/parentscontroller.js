@@ -38,7 +38,8 @@ module.exports = {
                 where: {
                     // excluded the logged-in parent
                     [Op.not]: [{ id: req.session.passport.user.id }]
-                }
+                },
+                order: [['userName', 'ASC']],
             }).then(function (result) {
                 res.json(result)
             })
@@ -63,26 +64,58 @@ module.exports = {
                 .catch(err => res.status(422).json(err));
         }
     },
+    // find all parents - except the parent logged in - filter by city 
+    findAllParentsForACity: function (req, res) {
+        if (req.isAuthenticated()) {
+            console.log("2 - Filtering Members based on city", req.params.city);
+            db.parents.findAll({
+                attributes: ["id", "userName", "email", "city", "state", "photoLink"],
+                where: {
+                    // excluded the logged-in parent
+                    city: req.params.city,
+                    [Op.not]: [{ id: req.session.passport.user.id }]
+                }
+            }).then(function (result) {
+                console.log("3 - Filtering Members based on city", result);
+                res.json(result);
+            })
+                .catch(err => res.status(422).json(err));
+        }
+    },
     // get all parents - except the parent logged in - filter by School Name 
     findAllParentsForASchool: function (req, res) {
         if (req.isAuthenticated()) {
             db.parents.findAll(
                 {
-                    order: [
-                        ["updatedAt", "ASC"]
-                    ],
                     attributes: ["id", "userName", "email", "city", "state", "photoLink"],
-                    //includes the cross-reference table to join the schools with parents 
-                    include: [
-                        { model: db.parentSchools, as: "parentSchools" },
-                        {
-                            model: db.schools, as: "schools",
-                            where: {
-                                [Op.eq]: [{ name: req.params.school }]
-                            }
-                        }
-                    ]
-                }
+
+                    //INNER JOINS to get data 
+                    include: [{ all: true, nested: true }]}
+                    // include: [
+                //         {
+                //             model: db.parentSchools, as: "parentSchools", required: false,
+
+                //             include: [
+                //                 // {
+                //                 //     model: db.schools, as: "schools",
+                //                 //     attributes: ['id', 'name'],
+                //                 //     where: {
+                //                 //         name: req.body.school
+                //                 //     },
+                //                 //     //Nested Eager Loading 
+                //                 //     required: false
+
+                //                 // }]
+                //                 //Retrives all results related to the parent model for every parent
+                                // { all: true }
+                //             ]    
+                //         }
+                    // ],
+                //     where: {
+                //         // excluded the logged-in parent
+                //         [Op.not]: [{ id: req.session.passport.user.id }]
+                //     },
+                // }
             ).then(function (results) {
                 res.json(results);
                 console.log("parents for a school ", results);

@@ -11,8 +11,12 @@ router.route("/")
 router.route("/state/:state")
 	.get(parentsController.findAllParentsForAState);
 
+// displaying all the parents - for the filter criteria [City]
+router.route("/city/:city")
+	.get(parentsController.findAllParentsForACity);
+
 // displaying all the parents - for the filter criteria [School]
-router.route("/school/:school")
+router.route("/school")
 	.get(parentsController.findAllParentsForASchool);
 
 // get the info of the parents already in the database - to check username at sign-up
@@ -57,7 +61,12 @@ function passportAuthenticate(localStrategy, req, res, next) {
 					console.log(req.session.passport.user.dataValues.id);
 					console.log("##########################");
 					console.log("\n")
-					return res.json({status:"success"});
+					return res.json({
+						status:"success",
+						userName: req.session.passport.user.dataValues.userName,
+						userId: req.session.passport.user.dataValues.id,
+						photoLink: req.session.passport.user.dataValues.photoLink
+				});
 				}
 
 			});
